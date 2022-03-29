@@ -1,10 +1,10 @@
 {
-  "name": "polygondomain",
+  "name": "contracts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "hhrun": "npx hardhat run scripts/run.js"
+    "dev": "npx hardhat run scripts/run.js"
   },
   "keywords": [],
   "author": "",
