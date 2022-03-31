@@ -40,7 +40,7 @@ contract DomainsDev is ERC721URIStorage {
     }
 
     function register(string calldata name) public payable {
-        // Check that name is unregistered: if it points to void (0x000..)
+        // Check that name is unregistered: if it points to void
         require(domains[name] == address(0));
 
         uint256 _price = price(name);

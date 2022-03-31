@@ -2,51 +2,31 @@ import { useEffect, useState } from "react";
 import "./styles/App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
 
-// Constants
-const TWITTER_HANDLE = "sparcjv";
-const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-
 const App = () => {
+  const { ethereum } = window;
+
   const [currentAccount, setCurrentAccount] = useState("");
+  const [inputDomain, setInputDomain] = useState("");
+  const [recordTwitter, setRecordTwitter] = useState("");
 
   const connectWallet = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        alert("Get MetaMask -> https://metamask.io");
-        return;
-      }
-
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-
-      console.log("Connected", accounts[0]);
-      setCurrentAccount(accounts[0]);
-    } catch (error) {
-      console.log(error);
+    if (!ethereum) {
+      return alert("MetaMask not found!\nGet it @ https://metamask.io");
     }
+
+    const requestAccounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+
+    setCurrentAccount(requestAccounts[0]);
   };
 
   const checkWalletConnection = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      console.log("Metamask not found!");
-      return;
-    } else {
-      console.log(`We have the eth object ${ethereum}`);
-    }
-
     const accounts = await ethereum.request({ method: "eth_accounts" });
 
     if (accounts.length !== 0) {
       const account = accounts[0];
-      console.log("Found an authorized account:", account);
       setCurrentAccount(account);
-    } else {
-      console.log("No authorized account found");
     }
   };
 
@@ -65,6 +45,42 @@ const App = () => {
     </div>
   );
 
+  const renderInputForm = (
+    <div className="form-container">
+      <div className="first-row">
+        <input
+          type="text"
+          value={inputDomain}
+          placeholder="domain"
+          onChange={(e) => setInputDomain(e.target.value)}
+        />
+        <p className="tld">.yktv</p>
+      </div>
+      <input
+        type="text"
+        value={recordTwitter}
+        placeholder="twitter handle"
+        onChange={(e) => setRecordTwitter(e.target.value)}
+      />
+      <div className="button-container">
+        <button
+          className="cta-button mint-button"
+          disabled={null}
+          onClick={null}
+        >
+          Mint
+        </button>
+        <button
+          className="cta-button mint-button"
+          disabled={null}
+          onClick={null}
+        >
+          Set data
+        </button>
+      </div>
+    </div>
+  );
+
   useEffect(() => {
     checkWalletConnection();
   }, []);
@@ -80,15 +96,15 @@ const App = () => {
             </div>
           </header>
         </div>
-        {!currentAccount && renderNoConnection}
+        {currentAccount ? renderInputForm : renderNoConnection}
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
             className="footer-text"
-            href={TWITTER_LINK}
+            href="https://twitter.com/sparcjv"
             target="_blank"
             rel="noreferrer"
-          >{`built with @${TWITTER_HANDLE}`}</a>
+          >{`made with <3 by @sparcjv`}</a>
         </div>
       </div>
     </div>
