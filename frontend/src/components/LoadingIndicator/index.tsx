@@ -1,7 +1,7 @@
-import React from 'react';
-import './LoadingIndicator.css';
+import React from "react";
+import "./LoadingIndicator.css";
 
-const LoadingIndicator = () => {
+const LoadingIndicator: React.FC = () => {
   return (
     <div className="lds-ring">
       <div></div>
