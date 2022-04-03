@@ -1,6 +1,8 @@
 const main = async () => {
-  const domainContractFactory = await hre.ethers.getContractFactory("Domains");
-  const domainContract = await domainContractFactory.deploy("yktv");
+  const domainContractFactory = await hre.ethers.getContractFactory(
+    "DomainsV3"
+  );
+  const domainContract = await domainContractFactory.deploy();
   await domainContract.deployed();
 
   console.log("Contract deployed to:", domainContract.address);
@@ -11,7 +13,7 @@ const main = async () => {
   await txn.wait();
   console.log("Minted domain marin.yktv");
 
-  txn = await domainContract.setRecord("marin", "Woah 2 or 1?");
+  txn = await domainContract.setRecord("marin", "sparcjv");
   await txn.wait();
   console.log("Set record for marin.yktv");
 

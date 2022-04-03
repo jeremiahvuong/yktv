@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx hardhat run scripts/run.js",
+    "rob": "npx hardhat run scripts/rob.js",
     "deploy": "npx hardhat run scripts/deploy.js --network mumbai"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "solhint-plugin-prettier": "^0.0.5"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.5.0"
+    "@openzeppelin/contracts": "^4.5.0",
+    "dotenv": "^16.0.0"
   }
 }
