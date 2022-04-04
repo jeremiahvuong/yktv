@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingIndicator from "./LoadingIndicator";
 
 interface Props {
   setEditing: (arg0: boolean) => void;
@@ -62,7 +63,7 @@ const RenderMints: React.FC<Props> = ({
       </div>
     );
   } else {
-    return <p>Nothing</p>;
+    return <LoadingIndicator />;
   }
 };
 

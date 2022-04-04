@@ -3,13 +3,11 @@ import { ethers } from "ethers";
 import "./styles/App.css";
 //@ts-ignore
 import twitterLogo from "./assets/twitter-logo.svg";
-
 import InputForm from "./components/inputForm";
 import ConnectWallet from "./components/connectWallet";
 import RenderMints from "./components/renderMints";
 //@ts-ignore
 import contractAbi from "./utils/contractAbi.json";
-
 //@ts-ignore
 import polygonLogo from "./assets/polygonlogo.png";
 //@ts-ignore
@@ -19,20 +17,25 @@ import { networks } from "./utils/networks";
 const contractAddress = "0x970230905AF1Ee7b01eE6B8eC8093e9D7E15B81c";
 
 const App: React.FC = () => {
+  // functionality
+  const [network, setNetwork] = useState("");
+  const [currentAccount, setCurrentAccount] = useState("");
+  const { ethereum }: any = window;
+
+  // nft interaction
   const [domain, setDomain] = useState("");
   const [recordTwitter, setRecordTwitter] = useState("");
-  const [currentAccount, setCurrentAccount] = useState("");
-  const [network, setNetwork] = useState("");
 
+  // change var state
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // display domains
   const [mints, setMints] = useState<any[]>([]);
 
   const fetchMints = async () => {
     try {
       if (ethereum) {
-        // You know all this
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
@@ -41,7 +44,6 @@ const App: React.FC = () => {
           signer
         );
 
-        // Get all the domain names from our contract
         const names = await contract.getAllNames();
 
         // For each name, get the record and the address
@@ -130,14 +132,6 @@ const App: React.FC = () => {
     }
   };
 
-  // This will run any time currentAccount or network are changed
-  useEffect(() => {
-    if (network === "Polygon Mumbai Testnet") {
-      fetchMints();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAccount, network]);
-
   const updateDomain = async () => {
     if (!recordTwitter || !domain) {
       return;
@@ -168,7 +162,6 @@ const App: React.FC = () => {
     setLoading(false);
   };
 
-  const { ethereum }: any = window;
   const connectWallet = async () => {
     if (!ethereum) {
       return alert("MetaMask not found!\nGet it @ https://metamask.io");
@@ -205,6 +198,14 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // This will run any time currentAccount or network are changed
+  useEffect(() => {
+    if (network === "Polygon Mumbai Testnet") {
+      fetchMints();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentAccount, network]);
+
   return (
     <div className="App">
       <div className="container">
@@ -222,9 +223,8 @@ const App: React.FC = () => {
               />
               {currentAccount ? (
                 <p>
-                  {" "}
-                  Wallet: {currentAccount.slice(0, 6)}...
-                  {currentAccount.slice(-4)}{" "}
+                  {currentAccount.slice(0, 6)}...
+                  {currentAccount.slice(-4)}
                 </p>
               ) : (
                 <p> Not connected </p>
