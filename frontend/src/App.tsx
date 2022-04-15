@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./styles/App.css";
-//@ts-ignore
-import twitterLogo from "./assets/twitter-logo.svg";
+
+// Import components
 import InputForm from "./components/inputForm";
 import ConnectWallet from "./components/connectWallet";
 import RenderMints from "./components/renderMints";
+
+//@ts-ignore
+import twitterLogo from "./assets/twitter-logo.svg";
 //@ts-ignore
 import contractAbi from "./utils/contractAbi.json";
 //@ts-ignore
 import polygonLogo from "./assets/polygonlogo.png";
 //@ts-ignore
 import ethLogo from "./assets/ethlogo.png";
-import { networks } from "./utils/networks";
 
-const contractAddress = "0x970230905AF1Ee7b01eE6B8eC8093e9D7E15B81c";
+// Import customs
+import { networks } from "./utils/networks";
+import { CONTRACT_ADDRESS } from "./utils/constants";
 
 const App: React.FC = () => {
   // functionality
+  const { ethereum }: any = window;
   const [network, setNetwork] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
-  const { ethereum }: any = window;
 
   // nft interaction
   const [domain, setDomain] = useState("");
@@ -39,7 +43,7 @@ const App: React.FC = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
-          contractAddress,
+          CONTRACT_ADDRESS,
           contractAbi.abi,
           signer
         );
@@ -91,7 +95,7 @@ const App: React.FC = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
-          contractAddress,
+          CONTRACT_ADDRESS,
           contractAbi.abi,
           signer
         );
@@ -143,7 +147,7 @@ const App: React.FC = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
-          contractAddress,
+          CONTRACT_ADDRESS,
           contractAbi.abi,
           signer
         );
