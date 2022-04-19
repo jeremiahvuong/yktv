@@ -10,10 +10,10 @@ interface Props {
   setRecordTwitter: (arg0: string) => void;
   mintDomain: () => void;
   network: string;
-  editing: any;
-  loading: any;
-  updateDomain: any;
-  setEditing: any;
+  editing: boolean;
+  loading: boolean;
+  updateDomain: () => void;
+  setEditing: (arg0: boolean) => void;
 }
 
 const InputForm: React.FC<Props> = ({

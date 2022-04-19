@@ -5,7 +5,7 @@ interface Props {
   setEditing: (arg0: boolean) => void;
   setDomain: (arg0: string) => void;
   currentAccount: string;
-  mints: any;
+  mints: string[];
 }
 
 const RenderMints: React.FC<Props> = ({

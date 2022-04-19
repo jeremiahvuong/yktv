@@ -7,18 +7,15 @@ import InputForm from "./components/inputForm";
 import ConnectWallet from "./components/connectWallet";
 import RenderMints from "./components/renderMints";
 
-//@ts-ignore
+// Import assets
 import twitterLogo from "./assets/twitter-logo.svg";
-//@ts-ignore
 import contractAbi from "./utils/contractAbi.json";
-//@ts-ignore
 import polygonLogo from "./assets/polygonlogo.png";
-//@ts-ignore
 import ethLogo from "./assets/ethlogo.png";
 
 // Import customs
 import { networks } from "./utils/networks";
-import { CONTRACT_ADDRESS } from "./utils/constants";
+import { CONTRACT_ADDRESS } from "./constants";
 
 const App: React.FC = () => {
   // functionality
@@ -35,7 +32,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   // display domains
-  const [mints, setMints] = useState<any[]>([]);
+  const [mints, setMints] = useState<string[]>([]);
 
   const fetchMints = async () => {
     try {
@@ -52,7 +49,7 @@ const App: React.FC = () => {
 
         // For each name, get the record and the address
         const mintRecords = await Promise.all(
-          names.map(async (name: any) => {
+          names.map(async (name: string) => {
             const mintRecord = await contract.records(name);
             const owner = await contract.domains(name);
             return {
@@ -237,28 +234,30 @@ const App: React.FC = () => {
           </header>
         </div>
         {currentAccount ? (
-          <InputForm
-            domain={domain}
-            setDomain={setDomain}
-            recordTwitter={recordTwitter}
-            setRecordTwitter={setRecordTwitter}
-            mintDomain={mintDomain}
-            network={network}
-            editing={editing}
-            loading={loading}
-            updateDomain={updateDomain}
-            setEditing={setEditing}
-          />
+          <>
+            <InputForm
+              domain={domain}
+              setDomain={setDomain}
+              recordTwitter={recordTwitter}
+              setRecordTwitter={setRecordTwitter}
+              mintDomain={mintDomain}
+              network={network}
+              editing={editing}
+              loading={loading}
+              updateDomain={updateDomain}
+              setEditing={setEditing}
+            />
+            {mints && (
+              <RenderMints
+                setEditing={setEditing}
+                setDomain={setDomain}
+                currentAccount={currentAccount}
+                mints={mints}
+              />
+            )}
+          </>
         ) : (
           <ConnectWallet connectWallet={connectWallet} />
-        )}
-        {mints && (
-          <RenderMints
-            setEditing={setEditing}
-            setDomain={setDomain}
-            currentAccount={currentAccount}
-            mints={mints}
-          />
         )}
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
