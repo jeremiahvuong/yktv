@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import "./styles/App.css";
-
-// Import components
-import InputForm from "./components/inputForm";
-import ConnectWallet from "./components/connectWallet";
-import RenderMints from "./components/renderMints";
-
-// Import assets
-import twitterLogo from "./assets/twitter-logo.svg";
-import contractAbi from "./utils/contractAbi.json";
-import polygonLogo from "./assets/polygonlogo.png";
+import React, { useEffect, useState } from "react";
 import ethLogo from "./assets/ethlogo.png";
-
-// Import customs
-import { networks } from "./utils/networks";
+import polygonLogo from "./assets/polygonlogo.png";
+import ConnectWallet from "./components/connectWallet";
+import InputForm from "./components/inputForm";
+import RenderMints from "./components/renderMints";
 import { CONTRACT_ADDRESS } from "./constants";
+import "./styles/App.css";
+import contractAbi from "./utils/contractAbi.json";
+import { networks } from "./utils/networks";
 
 const App: React.FC = () => {
-  // functionality
+  // functionalities
   const { ethereum }: any = window;
   const [network, setNetwork] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
@@ -61,11 +54,11 @@ const App: React.FC = () => {
           })
         );
 
-        console.log("MINTS FETCHED ", mintRecords);
+        // console.log("MINTS FETCHED ", mintRecords);
         setMints(mintRecords);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -84,7 +77,7 @@ const App: React.FC = () => {
      * 5+ = 0.1 */
     const price =
       domain.length === 3 ? "0.5" : domain.length === 4 ? "0.3" : "0.1";
-    console.log(`Minting domain ${domain} with price ${price}`);
+    // console.log(`Minting domain ${domain} with price ${price}`);
 
     try {
       const { ethereum }: any = window;
@@ -97,7 +90,7 @@ const App: React.FC = () => {
           signer
         );
 
-        console.log("Popping up wallet!");
+        // console.log("Popping up wallet!");
 
         let tx = await contract.register(domain, {
           value: ethers.utils.parseEther(price),
@@ -107,16 +100,16 @@ const App: React.FC = () => {
 
         // txn success check
         if (recipt.status === 1) {
-          console.log(
-            `Domain minted! https://mumbai.polygonscan.com/tx/${tx.hash}`
-          );
+          // console.log(
+          //   `Domain minted! https://mumbai.polygonscan.com/tx/${tx.hash}`
+          // );
 
           tx = await contract.setRecord(domain, recordTwitter);
           await tx.wait();
 
-          console.log(
-            `Twitter set! https://mumbai.polygonscan.com/tx/${tx.hash}`
-          );
+          // console.log(
+          //   `Twitter set! https://mumbai.polygonscan.com/tx/${tx.hash}`
+          // );
 
           setTimeout(() => {
             fetchMints();
@@ -129,7 +122,7 @@ const App: React.FC = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -138,7 +131,7 @@ const App: React.FC = () => {
       return;
     }
     setLoading(true);
-    console.log("Updating domain", domain, "with record", recordTwitter);
+    // console.log("Updating domain", domain, "with record", recordTwitter);
     try {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
@@ -151,14 +144,14 @@ const App: React.FC = () => {
 
         let tx = await contract.setRecord(domain, recordTwitter);
         await tx.wait();
-        console.log("Record set https://mumbai.polygonscan.com/tx/" + tx.hash);
+        // console.log("Record set https://mumbai.polygonscan.com/tx/" + tx.hash);
 
         fetchMints();
         setRecordTwitter("");
         setDomain("");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     setLoading(false);
   };
@@ -196,7 +189,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     checkWalletConnection();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // This will run any time currentAccount or network are changed
@@ -204,7 +196,6 @@ const App: React.FC = () => {
     if (network === "Polygon Mumbai Testnet") {
       fetchMints();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAccount, network]);
 
   return (
@@ -260,13 +251,12 @@ const App: React.FC = () => {
           <ConnectWallet connectWallet={connectWallet} />
         )}
         <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
             className="footer-text"
-            href="https://twitter.com/sparcjv"
+            href="https://github.com/jeremiahvuong/yktv"
             target="_blank"
             rel="noreferrer"
-          >{`made with <3 by @sparcjv`}</a>
+          >{`made with <3 by jeremiahvuong`}</a>
         </div>
       </div>
     </div>
