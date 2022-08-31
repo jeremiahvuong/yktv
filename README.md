@@ -2,6 +2,8 @@
 
 An old project, learned a lot from it.
 
+![Smart Contract UML](https://github.com/jeremiahvuong/yktv/blob/main/contract/contract.svg?raw=true)
+
 ### Developing
 
 For contract:
